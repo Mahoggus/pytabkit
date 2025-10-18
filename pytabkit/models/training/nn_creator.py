@@ -10,7 +10,7 @@ from pytabkit.models.nn_models.base import set_hp_context, SequentialLayer, Laye
 from pytabkit.models.nn_models.models import NNFactory
 from pytabkit.models.training.coord import HyperparamManager
 from pytabkit.models.training.logging import Logger
-from pytabkit.models.training.metrics import Metrics, mse, cross_entropy
+from pytabkit.models.training.metrics import Metrics, mse, cross_entropy, smooth_l1_loss
 from pytabkit.models.alg_interfaces.base import SplitIdxs, InterfaceResources
 
 def get_realmlp_auto_batch_size(n_train: int):
@@ -94,6 +94,8 @@ class NNCreator:
             train_criterion = mse if self.n_classes == 0 else cross_entropy  # defaults
         elif train_metric_name == 'mse':
             train_criterion = mse
+        elif train_metric_name == 'smooth_l1_loss':
+            train_criterion = smooth_l1_loss
         elif train_metric_name == 'cross_entropy':
             train_criterion = cross_entropy
         else:
