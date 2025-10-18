@@ -79,7 +79,7 @@ def mse(y_pred, y, reduction='mean'):
     res = ((y_pred - y) ** 2).mean(dim=-1)
     return apply_reduction(res, reduction)
 
-def l1_loss(y_pred, y, beta=0.5, reduction='mean'):
+def smooth_l1_loss(y_pred, y, beta=0.5, reduction='mean'):
     if not torch.is_floating_point(y):
         # in case mse should be used for classification
         y = F.one_hot(y.squeeze(-1), num_classes=y_pred.shape[-1])
