@@ -85,7 +85,7 @@ def smooth_l1_loss(y_pred, y, beta=0.5, reduction='mean'):
         y = F.one_hot(y.squeeze(-1), num_classes=y_pred.shape[-1])
     if y_pred.dim() != y.dim():
         raise RuntimeError('MSE: y_pred.dim() != y.dim(): could lead to broadcasting errors')
-    diff = torch.abs(input - target)
+    diff = torch.abs(y_pred - y)
     res = torch.where(diff < beta, 0.5 * (diff ** 2) / beta, diff - 0.5 * beta)
     return apply_reduction(res, reduction)
 
